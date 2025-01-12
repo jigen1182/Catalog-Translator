@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get install -y git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/DiogoMiguel93/Catalog-Translator.git /app
+RUN git clone https://github.com/jigen1182/Catalog-Translator /app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
