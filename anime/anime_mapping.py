@@ -111,8 +111,8 @@ if __name__ == '__main__':
     anidb_map = load_anidb_map()
     print(len(imdb_map))
 
-    titans = imdb_map['tt2560140']
-    print(anidb_map["9541"])
+    titans = imdb_map['tt21209876']
+    #print(anidb_map["9541"])
     print(titans)
     """
     kitsu_anidb_map = load_kitsu_to_anidb_map()
