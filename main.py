@@ -13,9 +13,10 @@ import asyncio
 import httpx
 import tmdb
 import base64
+import os
 
 # Settings
-translator_version = 'v0.0.7'
+translator_version = 'v0.0.8'
 FORCE_PREFIX = False
 FORCE_META = False
 USE_TMDB_ID_META = True
@@ -73,13 +74,17 @@ cinemeta_url = 'https://v3-cinemeta.strem.io'
 
 
 @app.get('/', response_class=HTMLResponse)
-@app.get('/configure', response_class=HTMLResponse)
-async def configure(request: Request):
+async def home(request: Request):
     response = templates.TemplateResponse("configure.html", {"request": request})
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
+
+@app.get('/{addon_url}/{user_settings}/configure')
+async def configure(addon_url):
+    addon_url = decode_base64_url(addon_url) + '/configure'
+    return RedirectResponse(addon_url)
 
 @app.get('/link_generator', response_class=HTMLResponse)
 async def link_generator(request: Request):
@@ -342,4 +347,4 @@ def parse_user_settings(user_settings: str) -> dict:
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='0.0.0.0', port=8080)
+    uvicorn.run(app, host='0.0.0.0', port=int(os.environ.get("PORT", 8080)))
